@@ -59,7 +59,11 @@ Kafka is a **distributed event streaming platform**—a supercharged system for 
 ### Brokers
 - **What**: The worker bees of Kafka—servers storing and serving data.
 - **Role**:
-  - Host partitions (e.g., `kafka-1` holds `orders-0`).
+  - Host partitions (e.g., `kafka-1` holds `orders-0`, `kafka-2` holds `orders-3`, `kafka-3` holds `orders-2`).
+  - Note: having for example 3 brokers does not mean a master and slaves.. All brokers are active. A broker might be the leader of some partition of a topic while holding replicas of other partitions
+  - say we have a topic oder with the partitions oder-1, oder-2 , oder-3, Kafka-broker-1 might be the leader of partition oder-2 while holding replicas of partition oder-1 and oder-3
+  - kafka-broker-2 might be the leader of partition oder-1 while holding replicas of oder-2 and oder-3
+  - If any of the brokers fail, the controllers vote for a new leader(broker) to take over the partition(s) the failed broker was controlling
   - Handle producer writes and consumer reads.
   - Replicate data for safety.
 - **Your Setup**: `kafka-1`, `kafka-2`, `kafka-3`—each a broker.
